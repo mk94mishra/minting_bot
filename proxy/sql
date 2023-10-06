@@ -1,0 +1,87 @@
+CREATE TABLE IF NOT EXISTS tbl_proxy
+                (`id` INTEGER PRIMARY KEY AUTOINCREMENT,
+                 `proxy_url` TEXT,
+                 `weightage` INT,
+                 `weightage_minute` INT,
+                 `event_time` TEXT,
+                 `proxy_name` TEXT)
+
+
+insert
+	into
+	tbl_proxy (`proxy_url`,
+	`weightage`,
+	`weightage_minute`,
+	`event_time`,
+    `proxy_name`)
+values 
+('https://api.binance.com',
+'0',
+'0',
+'0',
+'proxy_one'),
+('https://api1.binance.com',
+'0',
+'0',
+'0',
+'proxy_one'),
+('https://api2.binance.com',
+'0',
+'0',
+'0',
+'proxy_one'),
+('https://api3.binance.com',
+'0',
+'0',
+'0',
+'proxy_one'),
+('https://api.binance.com',
+'0',
+'0',
+'0',
+'proxy_two'),
+('https://api1.binance.com',
+'0',
+'0',
+'0',
+'proxy_two'),
+('https://api2.binance.com',
+'0',
+'0',
+'0',
+'proxy_two'),
+('https://api3.binance.com',
+'0',
+'0',
+'0',
+'proxy_two'),
+('https://api.binance.com',
+'0',
+'0',
+'0',
+'proxy_three'),
+('https://api1.binance.com',
+'0',
+'0',
+'0',
+'proxy_three'),
+('https://api2.binance.com',
+'0',
+'0',
+'0',
+'proxy_three'),
+('https://api3.binance.com',
+'0',
+'0',
+'0',
+'proxy_three')
+
+update
+	tbl_proxy
+set
+	weightage = 0 ,
+	weightage_minute = 0,
+	event_time = 0
+
+
+select * from tbl_proxy
