@@ -7,7 +7,7 @@ custom = {
     "bin_max_time":60000, # 60 second
     "bin_max_weightage":5500  
 }
-proxy_name = 'proxy_three'
+proxy_name = 'proxy_four'
 bin_api_list = [
     'https://api.binance.com',
     'https://api1.binance.com',
