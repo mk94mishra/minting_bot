@@ -40,7 +40,6 @@ def update_proxy(response_header):
                 item[1] = weigtage
                 item[2] = weightage_one_minute
                 item[3] = event_time
-    print(proxy_details_list)
 i=0
 import time
 # Function to make an API call using the specified proxy
@@ -79,7 +78,6 @@ async def concurrent_call(start_range,end_range,data):
     Returns:
         A list of JSON responses from the API, or None if all requests failed.
     """
-    print("tutorss-",start_range,end_range)
     async with ClientSession() as session:
         tasks = [make_api_call(session, data) for i in range(start_range,end_range+1)]
         return await asyncio.gather(*tasks)
