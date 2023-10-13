@@ -15,7 +15,7 @@ custom = {
 }
 
 proxy_url ={
-    'proxy_one':'http://3.145.60.97:80',
+    'proxy_one':'http://3.145.60.97:8000',
     'proxy_two':'http://3.12.123.111:80',
     'proxy_three':'http://18.220.46.156:80',
     'proxy_four':'http://18.116.51.129:80'
