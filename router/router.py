@@ -1,7 +1,6 @@
 # Import the necessary libraries
 import asyncio
 from aiohttp import ClientSession
-import sqlite3
 import datetime
 import config
 
