@@ -1,6 +1,5 @@
 # Import the necessary libraries
 import aiohttp
-import sqlite3
 import datetime
 import config as config
 
@@ -74,8 +73,11 @@ async def call_api(url, method, headers=None, data=None):
         else:
             raise ValueError(f'Unsupported HTTP method: {method}')
 
-        # Update the weightage of the proxy
-        update_weightage(response_header, base_url)
+        try:
+            # Update the weightage of the proxy
+            update_weightage(response_header, base_url)
+        except Exception:
+            print(response_header)
 
         # Get the proxy details
         proxy_details = get_proxy_details()
