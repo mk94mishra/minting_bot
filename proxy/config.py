@@ -2,6 +2,12 @@ custom = {
     "bin_max_time":60000, # 60 second
     "bin_max_weightage":5500  
 }
+
+# custom = {
+#     "bin_max_time":60, # 60 second
+#     "bin_max_weightage":2
+# }
+
 proxy_name = 'proxy_one'
 
 bin_api_list = [

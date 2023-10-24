@@ -14,22 +14,22 @@ custom = {
     "proxy_max_weightage":5500  
 }
 
-# proxy_url ={
-#     'proxy_one':'http://127.0.0.1:8000',
-#     'proxy_two':'http://18.61.28.63:8000',
-#     'proxy_three':'http://18.60.63.124:8000',
-#     'proxy_four':'http://18.61.97.72:8000',
-#     'proxy_five':'http://18.60.85.51:8000'
-# }
-
-# public ip's proxy
 proxy_url ={
-    'proxy_one':'http://18.60.247.215:8000',
+    'proxy_one':'http://127.0.0.1:8000',
     'proxy_two':'http://18.61.28.63:8000',
     'proxy_three':'http://18.60.63.124:8000',
     'proxy_four':'http://18.61.97.72:8000',
     'proxy_five':'http://18.60.85.51:8000'
 }
+
+# # public ip's proxy
+# proxy_url ={
+#     'proxy_one':'http://18.60.247.215:8000',
+#     'proxy_two':'http://18.61.28.63:8000',
+#     'proxy_three':'http://18.60.63.124:8000',
+#     'proxy_four':'http://18.61.97.72:8000',
+#     'proxy_five':'http://18.60.85.51:8000'
+# }
 
 # private ip's proxy
 # proxy_url ={

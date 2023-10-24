@@ -88,7 +88,6 @@ async def call_api(url, method, headers=None, data=None):
             'headers': response_header,
             'proxy_details': proxy_details
         }
-
         # Return the final response
         return final_response
 
