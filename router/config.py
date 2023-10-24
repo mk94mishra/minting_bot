@@ -22,6 +22,7 @@ custom = {
 #     'proxy_five':'http://18.60.85.51:8000'
 # }
 
+# public ip's proxy
 proxy_url ={
     'proxy_one':'http://18.60.247.215:8000',
     'proxy_two':'http://18.61.28.63:8000',
@@ -30,6 +31,7 @@ proxy_url ={
     'proxy_five':'http://18.60.85.51:8000'
 }
 
+# private ip's proxy
 # proxy_url ={
 #     'proxy_one':'http://18.60.247.215:8000',
 #     'proxy_two':'http://18.61.28.63:8000',
