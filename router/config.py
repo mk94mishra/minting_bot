@@ -80,5 +80,9 @@ proxy_details = [
         ['https://api.binance.com',0,0,0,'proxy_four'],
         ['https://api1.binance.com',0,0,0,'proxy_four'],
         ['https://api2.binance.com',0,0,0,'proxy_four'],
-        ['https://api3.binance.com',0,0,0,'proxy_four']
+        ['https://api3.binance.com',0,0,0,'proxy_four'],
+        ['https://api.binance.com',0,0,0,'proxy_five'],
+        ['https://api1.binance.com',0,0,0,'proxy_five'],
+        ['https://api2.binance.com',0,0,0,'proxy_five'],
+        ['https://api3.binance.com',0,0,0,'proxy_five']
     ]
