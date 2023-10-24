@@ -36,5 +36,4 @@ async def call_api_route(payloads: CallApi):
     if response is None:
         # Raise a 500 Internal Server Error exception
         raise HTTPException(status_code=500, detail="Error calling API")
-    print(response['proxy_details'])
     return response

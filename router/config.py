@@ -33,11 +33,11 @@ custom = {
 
 # private ip's proxy
 proxy_url ={
-    'proxy_one':'http://18.60.247.215:8000',
-    'proxy_two':'http://18.61.28.63:8000',
-    'proxy_three':'http://18.60.63.124:8000',
-    'proxy_four':'http://18.61.97.72:8000',
-    'proxy_five':'http://18.60.85.51:8000'
+    'proxy_one':'http://172.31.17.140:8000',
+    'proxy_two':'http://172.31.29.170:8000',
+    'proxy_three':'http://172.31.25.202:8000',
+    'proxy_four':'http://172.31.16.44:8000',
+    'proxy_five':'http://172.31.26.33:8000'
 }
 
 # public ip
@@ -50,7 +50,7 @@ proxy_url ={
 # priavte ip
 # 172.31.17.140
 # 172.31.29.170
-# 18.60.63.124
+# 172.31.25.202
 # 172.31.16.44
 # 172.31.26.33
 
