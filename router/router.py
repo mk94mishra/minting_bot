@@ -25,9 +25,9 @@ def select_proxy():
 
     return None
 
-def update_proxy(response_header): 
+def update_proxy(response_proxy_details): 
 
-    for response_data in response_header:
+    for response_data in response_proxy_details:
         url = response_data[0]
         name =  response_data[4]
         weigtage = response_data[1]
@@ -64,10 +64,11 @@ async def make_api_call(session, data):
     async with session.post(url, json=data) as response:
         json_response = await response.json()
         i=i+1
+        update_proxy(json_response['proxy_details'])
         with open('output.txt', 'a') as file:
             file.write(f'| {i}--{response.status}--{time.time()}\n')
             file.close()
-            header_response=response.headers
+        # header_response=response.headers
         return json_response
 
 # Function to make concurrent API calls
@@ -81,31 +82,30 @@ async def concurrent_call(start_range,end_range,data):
         tasks = [make_api_call(session, data) for i in range(start_range,end_range+1)]
         return await asyncio.gather(*tasks)
     
-total_call = 10
+total_call = 100000
 # Run the asyncio event loop and print the results
 async def call_all_proxy(data):
     start_range = 0
-    end_range = total_call//len(config.proxy)
-    results_one = await concurrent_call(start_range,end_range,data)
+    diff_range = total_call//len(config.proxy)
+    end_range = diff_range
+    results_one = await concurrent_call(start_range,diff_range,data)
 
     start_range = end_range
-    end_range = end_range+end_range
+    end_range = end_range+diff_range
     results_two = await concurrent_call(start_range+1,(end_range),data)
     
     start_range = end_range
-    end_range = end_range+end_range
-    results_three = await concurrent_call((start_range)+1,(total_call),data)
+    end_range = end_range+diff_range
+    results_three = await concurrent_call((start_range)+1,(end_range),data)
 
     start_range = end_range
     end_range = end_range+end_range
-    results_four = await concurrent_call((start_range)+1,(total_call),data)
+    results_four = await concurrent_call((start_range)+1,(end_range),data)
 
-    # start_range = end_range
-    # end_range = end_range+end_range
-    # last_call_reminder = total_call%len(config.proxy)
-    # results_five = await concurrent_call((start_range)+1,(total_call),data)
+    start_range = end_range
+    results_five = await concurrent_call((start_range)+1,(total_call),data)
 
-    results = [results_one,results_two,results_three,results_four]
+    results = [results_one,results_two,results_three,results_four,results_five]
     return results
 
 result = asyncio.run(call_all_proxy(data))
