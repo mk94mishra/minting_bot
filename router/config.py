@@ -12,7 +12,7 @@ custom = {
 }
 
 
-proxy_call_limit = 7500
+proxy_call_limit = 20000
 
 # proxy_url ={
 #     'proxy_one':'http://127.0.0.1:8000',
