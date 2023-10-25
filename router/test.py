@@ -21,6 +21,9 @@ async def timeout_call_one_by_one(seconds):
         if results is not None:
             total_results = len(results)
             print(f"Total results one by one: {total_results} in {seconds}")
+            with open('testresults.txt', 'a') as file:
+                file.write(f"Total results one by one: {total_results} in {seconds}")
+                file.close()
         else:
             print("No results due to timeout.")
     except asyncio.TimeoutError:
@@ -36,6 +39,9 @@ async def timeout_call_concurrent(seconds):
         if results is not None:
             total_results = len(results)
             print(f"Total results concurrent: {total_results} in {seconds}")
+            with open('testresults.txt', 'a') as file:
+                file.write(f"Total results one by one: {total_results} in {seconds}")
+                file.close()
         else:
             print("No results due to timeout.")
     except asyncio.TimeoutError:
@@ -44,6 +50,9 @@ async def timeout_call_concurrent(seconds):
         return None
 
 
+with open('testresults.txt', 'a') as file:
+    file.write(f"test initated \n")
+    file.close()
 # test call in 5 minutes
 asyncio.run(timeout_call_one_by_one(300))
 asyncio.run(timeout_call_concurrent(300))
