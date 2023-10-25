@@ -3,6 +3,9 @@ from datetime import datetime
 from router import *
 
 
+
+total_call = 10000
+
 # Define the data to be sent in the request
 data = {
     "url": "/api/v3/exchangeInfo",
@@ -51,7 +54,6 @@ asyncio.run(timeout_call_concurrent(60))
 
 
 # test 10,000 calls
-total_call = 10000
 start_time = datetime.now()
 results = call_all_proxy_one_by_one(total_call,data)
 print(f"one by one call start time{start_time} and end time{datetime.now()} in {total_call} call")
