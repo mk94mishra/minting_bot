@@ -24,7 +24,6 @@ async def make_api_call_concurrent(session, data, proxy_no):
     """
 
     url = select_proxy(proxy_no)
-    print(url)
     url = f"{url}/call_api"
     global i  
     async with session.post(url, json=data) as response:
@@ -49,7 +48,6 @@ def make_api_call(data,proxy_no):
     """
 
     url = select_proxy(proxy_no)
-    print(url)
     if url is None:
         return "proxy end"
     
@@ -79,7 +77,11 @@ async def concurrent_call(start_range,end_range,data,proxy_no):
 async def call_all_proxy_concurrent(total_call,data):
     all_results = []
     if total_call > 20:
+        if total_call > config.proxy_call_limit:
+            total_call = config.proxy_call_limit
+            
         diff_call = total_call//len(config.proxy)
+
         tasks = [asyncio.create_task(concurrent_call(proxy_no * diff_call,(proxy_no * diff_call) + diff_call,data,proxy_no)) for proxy_no in range(0,len(config.proxy))]
         results = await asyncio.gather(*tasks)
         all_results.append(results)
@@ -93,6 +95,9 @@ async def call_all_proxy_concurrent(total_call,data):
 
 def call_all_proxy_one_by_one(total_call,data):
     if total_call > 20:
+        if total_call > config.proxy_call_limit:
+            total_call = config.proxy_call_limit
+
         diff_call = total_call//len(config.proxy)
         start_range = 0
         end_range = diff_call

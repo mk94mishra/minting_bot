@@ -11,6 +11,9 @@ custom = {
     "proxy_max_weightage":5500  
 }
 
+
+proxy_call_limit = 7500
+
 # proxy_url ={
 #     'proxy_one':'http://127.0.0.1:8000',
 #     'proxy_two':'http://18.61.28.63:8000',
