@@ -59,19 +59,19 @@ with open('testresults.txt', 'a') as file:
 # asyncio.run(timeout_call_concurrent(300))
 
 # test 10,000 calls
-start_time = datetime.now()
-results = call_all_proxy_one_by_one(total_call,data)
-print(f"one by one call start time{start_time} and end time{datetime.now()} in {total_call} call")
-with open('testresults.txt', 'a') as file:
-    file.write(f"one by one call start time{start_time} and end time{datetime.now()} in {total_call} call\n")
-    file.close()
-
-# # test concurrent 10,000 calls
 # start_time = datetime.now()
-# results = asyncio.run(call_all_proxy_concurrent(total_call,data))
-# print(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
+# results = call_all_proxy_one_by_one(total_call,data)
+# print(f"one by one call start time{start_time} and end time{datetime.now()} in {total_call} call")
 # with open('testresults.txt', 'a') as file:
-#     file.write(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
+#     file.write(f"one by one call start time{start_time} and end time{datetime.now()} in {total_call} call\n")
 #     file.close()
+
+# test concurrent 10,000 calls
+start_time = datetime.now()
+results = asyncio.run(call_all_proxy_concurrent(total_call,data))
+print(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
+with open('testresults.txt', 'a') as file:
+    file.write(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
+    file.close()
 
 
