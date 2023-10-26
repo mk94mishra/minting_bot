@@ -51,8 +51,9 @@ def get_proxy_details():
     return proxy_expire_details
 
 # Call an API using a proxy
-async def call_api(url, method, headers=None, data=None):
-    for _ in range(len(config.bin_api_list)):
+def call_api(url, method, headers=None, data=None):
+
+    for _ in range(2):
         # Get the current base URL for the proxy
         base_url = current_base_url()
 
@@ -66,31 +67,28 @@ async def call_api(url, method, headers=None, data=None):
         response_header = []
         
         try:
-            # Create an async HTTP client session
-            async with aiohttp.ClientSession() as session:
-                # Make the API call using the specified HTTP method
-                if method == 'GET':
-                    async with session.get(api_url, headers=headers) as response:
-                        response_json = await response.json()
-                        response_header = response.headers
-                elif method == 'POST':
-                    async with session.post(api_url, headers=headers, json=data) as response:
-                        response_json = await response.json()
-                        response_header = response.headers
-                elif method == 'PUT':
-                    async with session.put(api_url, headers=headers, json=data) as response:
-                        response_json = await response.json()
-                        response_header = response.headers
-                elif method == 'DELETE':
-                    async with session.delete(api_url, headers=headers, json=data) as response:
-                        response_json = await response.json()
-                        response_header = response.headers
-                else:
-                    raise ValueError(f'Unsupported HTTP method: {method}')
+            if method == 'GET':
+                response = requests.get(api_url, headers=headers)
+                response_json = response.json()
+                response_header = response.headers
+            elif method == 'POST':
+                response = requests.post(api_url, headers=headers, json=data)
+                response_json = response.json()
+                response_header = response.headers
+            elif method == 'PUT':
+                response = requests.put(api_url, headers=headers, json=data)
+                response_json = response.json()
+                response_header = response.headers
+            elif method == 'DELETE':
+                response = requests.delete(api_url, headers=headers, json=data)
+                response_json = response.json()
+                response_header = response.headers
+            else:
+                raise ValueError(f'Unsupported HTTP method: {method}')
 
-                # Update the weightage of the proxy
-                update_weightage(response_header, base_url)
-                break
+            # Update the weightage of the proxy
+            update_weightage(response_header, base_url)
+            break
         except Exception as e:
             print(e)
             update_weightage(None, base_url)

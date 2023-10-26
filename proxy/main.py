@@ -24,10 +24,12 @@ async def call_api_route(payloads: CallApi):
     # Get the request payload as a dictionary
     payload = payloads.dict()
 
+    
     # Call the common.call_api() function to call the API
     response = await common.call_api(payload['url'], payload['method'], headers=payload['headers'], data=payload['data'])
+    
 
-    # Check if the proxy has expired
+    # # Check if the proxy has expired
     if 'Proxy expired' in response:
         # Raise a 422 Unprocessable Entity exception
         raise HTTPException(status_code=422, detail='Proxy expired')

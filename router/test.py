@@ -3,12 +3,14 @@ from router import *
 from datetime import datetime, timedelta
 import time
 
+import gc
 
-total_call = 5
+
+total_call = 1000
 
 # Define the data to be sent in the request
 data = {
-    "url": "/api/v3/time",
+    "url": "/api/v3/exchangeInfo",
     "method": "GET"
 }
 
@@ -47,9 +49,9 @@ async def timeout_call_concurrent(seconds):
         return None
 
 
-with open('testresults.txt', 'a') as file:
-    file.write(f"test initated \n")
-    file.close()
+# with open('testresults.txt', 'a') as file:
+#     file.write(f"test initated \n")
+#     file.close()
 
 # # test call in 1 minutes
 # timeout_call_one_by_one(60)
@@ -68,10 +70,18 @@ with open('testresults.txt', 'a') as file:
 
 # test concurrent 10,000 calls
 start_time = datetime.now()
-results = asyncio.run(call_all_proxy_concurrent(total_call,data))
-print(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
+limit_call = 100
+total_call_with_limit = total_call//limit_call
+all_results = []
+for _ in range(total_call_with_limit):
+    results = asyncio.run(call_all_proxy_concurrent(limit_call,data))
+    all_results.append(results)
+    
 with open('testresults.txt', 'a') as file:
-    file.write(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
+    file.write(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call\n")
+    file.write(f'{all_results}')
     file.close()
 
+print(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
+gc.collect()
 
