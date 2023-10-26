@@ -10,7 +10,7 @@ total_call = 1000
 
 # Define the data to be sent in the request
 data = {
-    "url": "/api/v3/exchangeInfo",
+    "url": "/api/v3/time",
     "method": "GET"
 }
 
