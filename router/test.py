@@ -6,7 +6,7 @@ import time
 import gc
 
 
-total_call = 1000
+total_call = 10000
 
 # Define the data to be sent in the request
 data = {
