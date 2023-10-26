@@ -94,6 +94,8 @@ async def call_all_proxy_concurrent(total_call,data):
 # print(result)
 
 def call_all_proxy_one_by_one(total_call,data):
+    
+    all_results = []
     if total_call > 20:
         if total_call > config.proxy_call_limit:
             total_call = config.proxy_call_limit
@@ -101,7 +103,6 @@ def call_all_proxy_one_by_one(total_call,data):
         diff_call = total_call//len(config.proxy)
         start_range = 0
         end_range = diff_call
-        all_results = []
         for proxy_no in range(0,len(config.proxy)):
             for _ in range(start_range,end_range):
                 results = make_api_call(data,proxy_no)
@@ -109,8 +110,8 @@ def call_all_proxy_one_by_one(total_call,data):
             start_range = end_range
             end_range = end_range + diff_call
     else:
-        for _ in range(start_range,total_call):
-            results = make_api_call(data,proxy_no)
+        for _ in range(0,total_call):
+            results = make_api_call(data,0)
             all_results.append(results)
     
     return all_results
