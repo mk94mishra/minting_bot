@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import time
 
 
-total_call = 10000
+total_call = 5
 
 # Define the data to be sent in the request
 data = {

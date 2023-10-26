@@ -16,10 +16,10 @@ proxy_call_limit = 20000
 
 # proxy_url ={
 #     'proxy_one':'http://127.0.0.1:8000',
-#     # 'proxy_two':'http://18.61.28.63:8000',
-#     # 'proxy_three':'http://127.0.0.1:8000',
-#     # 'proxy_four':'http://18.61.97.72:8000',
-#     # 'proxy_five':'http://18.60.85.51:8000'
+#     'proxy_two':'http://127.0.0.1:8000',
+#     'proxy_three':'http://127.0.0.1:8000',
+#     'proxy_four':'http://127.0.0.1:8000',
+#     'proxy_five':'http://127.0.0.1:8000'
 # }
 
 # public ip's proxy
