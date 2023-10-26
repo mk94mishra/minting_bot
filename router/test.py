@@ -70,7 +70,7 @@ async def timeout_call_concurrent(seconds):
 
 # test concurrent 10,000 calls
 start_time = datetime.now()
-limit_call = 100
+limit_call = 50
 total_call_with_limit = total_call//limit_call
 all_results = []
 for _ in range(total_call_with_limit):
