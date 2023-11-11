@@ -39,3 +39,4 @@ async def call_api_route(payloads: CallApi):
         # Raise a 500 Internal Server Error exception
         raise HTTPException(status_code=500, detail="Error calling API")
     return response
+
