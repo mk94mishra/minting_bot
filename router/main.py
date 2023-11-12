@@ -1,5 +1,5 @@
 # Import the necessary libraries
-from fastapi import FastAPI, HTTPException, HTTPException
+from fastapi import FastAPI, HTTPException, HTTPException,Request,Body
 from typing import Optional, Dict, Any
 from pydantic import BaseModel
 import asyncio
@@ -13,27 +13,16 @@ app = FastAPI()
 
 # Define the CallApi model
 class CallApi(BaseModel):
-    # The URL of the API to call
-    url: str
-    # The HTTP method to use
-    method: str
-    # Optional headers to send with the request
-    headers: Optional[Dict[str, str]] = None
     # Optional data to send with the request
-    data: Optional[Dict[str, Any]] = None
+    order: Optional[Dict[str, Any]] = None
 
-# Define the call_api_route endpoint
-@app.post("/router")
-async def call_api_route(payloads: CallApi):
-    # Get the request payload as a dictionary
-    payload = payloads.dict()
-
-    start_time = datetime.now()
+def arrange_data(start_time,total_call,url,method,headers,data):
     limit_call = 50
     total_call_with_limit = total_call//limit_call
     all_results = []
-    for _ in range(total_call_with_limit):
-        results = asyncio.run(call_all_proxy_concurrent(limit_call,data))
+    print(start_time,total_call,url,method,headers)
+    for i in range(total_call_with_limit):
+        results = asyncio.run(call_all_proxy_concurrent(limit_call,data={'url':url,'method':method,'headers':headers[i],'data':data[i]}))
         all_results.append(results)
         
     with open('testresults.txt', 'a') as file:
@@ -43,3 +32,28 @@ async def call_api_route(payloads: CallApi):
 
     print(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
     gc.collect()
+    return all_results
+
+
+# Define the call_api_route endpoint
+@app.get("/router")
+async def call_api_route(request:Request ):
+    url = str(request.url)
+    url = url.split('/')
+    url = "/".join(url[7:])
+    print(url)
+    # start_time=datetime.datetime.now()
+    # arrange_data(start_time,10  ,'bin_api','POST',request.headers,None)
+
+
+@app.post("/router")
+async def call_api_route(request:Request ):
+    start_time = datetime.now()
+    print(request.url)
+    url = request.url
+    # url = url.decode('ascii')
+    url = url.split('/')
+    print(url[6:])
+    # print(await request.body())
+    raw_data = await request.body()
+    print(raw_data)
