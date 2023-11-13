@@ -64,7 +64,6 @@ async def call_api(url, method, headers=None, data=None):
         api_url = f"{base_url}{url}"
         response_json = []
         response_header = []
-        
         try:
             # Create an async HTTP client session
             async with aiohttp.ClientSession() as session:

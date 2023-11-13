@@ -12,7 +12,7 @@ class CallApi(BaseModel):
     # The URL of the API to call
     url: str
     # The HTTP method to use
-    method: str
+    method: Optional[str] = None
     # Optional headers to send with the request
     headers: Optional[Dict[str, str]] = None
     # Optional data to send with the request
@@ -23,12 +23,11 @@ class CallApi(BaseModel):
 async def call_api_route(payloads: CallApi):
     # Get the request payload as a dictionary
     payload = payloads.dict()
-
+    print(payloads)
     
     # Call the common.call_api() function to call the API
     response = await common.call_api(payload['url'], payload['method'], headers=payload['headers'], data=payload['data'])
     
-
     # # Check if the proxy has expired
     if 'Proxy expired' in response:
         # Raise a 422 Unprocessable Entity exception
