@@ -6,8 +6,8 @@ from urllib.parse import urlencode
 
 
 # Replace with your Binance API key and secret
-api_key = 'Nw3cglPnQmqtJVCyjOp84CYfB9T0lcwT9Jm93hPbyAhEgR23mNz8gnkZuPXtfJwJ'
-api_secret = 'bsl0oeBw2sxni3PnOt9PpEnPmKQ9gB3IQVPYlzITTCzeJXGrW2vWAhByQjWFtcbu'
+api_key = 'U8Uvbf2Kh6D5GHswBxsuV504Urb1vZyuAScdqF1zEjzG1hrwXy4DqzpkFzM7P7AX'
+api_secret = 'fWSGqLmbVT7aCkgfTIPPGKiafTvSZQhM9Vs1VuwOIVPWDDNchiDyIuQXcjA9kcKe'
 
 # Replace with your actual proxy URL
 proxy_url = 'http://127.0.0.1:8001/router'
@@ -41,7 +41,7 @@ def arrange_order(api_key,api_secret,params):
     # print(request_data)
     return request_data
 
-total_users = 3
+total_users = 1
 data = []
 for _ in range(total_users):
     data.append(arrange_order(api_key,api_secret,params))
