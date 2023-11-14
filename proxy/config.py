@@ -8,7 +8,7 @@ custom = {
 #     "bin_max_weightage":2
 # }
 
-proxy_name = 'proxy_five'
+proxy_name = 'proxy_one'
 
 # bin_api_list = [
 #     'https://api1.binance.com',
