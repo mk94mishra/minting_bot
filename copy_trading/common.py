@@ -17,12 +17,13 @@ def fetch_trade_log(limit, offset):
     return response.json()
 
 
-page_number = [200,0]
+page_number = [100,0]
 open_order_ledger_one = {
         "total_trades": 0,
         "stake_capital": 10000,
         "open_orders": [],
-        "closed_orders": []
+        "closed_orders": [],
+        "offset":0
     }
 
 open_order_ledger_two = []
@@ -66,8 +67,8 @@ while True:
                     }
                 open_order_ledger_two.append(ledger)
                 open_order_ledger_one['stake_capital'] = open_order_ledger_one['stake_capital']+tl['realized_profit']
-                open_order_ledger_one['total_trades']=tl['trade_id']
                 open_order_ledger_one['closed_orders'].append(tl['trade_id'])
+            open_order_ledger_one['total_trades']=tl['trade_id']
 
     open_order = fetch_open_order_list()
     status_open_order_list = []
@@ -89,7 +90,8 @@ while True:
                         open_order_ledger_one['exit_reason'] = tl['exit_reason']
                         
                 open_order_ledger_one['open_orders'].remove(tl['trade_id'])
-    
+                page_number[1] = min(open_order_ledger_one['open_orders']) - 1 
+    open_order_ledger_one['offset']=page_number[1]
     trades = [
         {"trades":open_order_ledger_two},
         open_order_ledger_one
