@@ -16,15 +16,19 @@ proxy_url = 'http://127.0.0.1:8001/router'
 # Define order parameters
 symbol = 'BTCUSDT'
 side = 'SELL'
-type_ = 'MARKET'
+type_ = 'LIMIT'
+time_in_force = 'GTC'
 quantity = 0.0005
+price = 36200
 
 # Construct the query parameters
 params = {
     'symbol': symbol,
     'side': side,
     'type': type_,
+    'timeInForce': time_in_force,
     'quantity': quantity,
+    'price': price,
     'timestamp': int(time.time() * 1000),
 }
 
@@ -47,7 +51,7 @@ def arrange_order(api_key,api_secret,params):
     # print(request_data)
     return request_data
     
-total_users = 2
+total_users = 3
 data = []
 for _ in range(total_users):
     data.append(arrange_order(api_key,api_secret,params))
