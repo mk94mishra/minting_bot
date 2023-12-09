@@ -17,7 +17,7 @@ def fetch_trade_log(limit, offset):
     return response.json()
 
 
-page_number = [100,0]
+page_number = [10000,0]
 open_order_ledger_one = {
         "total_trades": 0,
         "stake_capital": 10000,
@@ -44,10 +44,10 @@ def make_open_order_ledger(open_order):
                 }
             open_order_ledger_one['open_orders'].append(ot['trade_id'])
             open_order_ledger_two.append(ledger)
-        page_number[1] = min(open_order_ledger_one['open_orders']) - 1 
+        page_number[1] = min(open_order_ledger_one['open_orders']) - 1 # offset
         open_order_ledger_one['total_trades']=ot['trade_id']
 
-
+import json
 while True:
     trade_log = fetch_trade_log(page_number[0],page_number[1])
     for tl in trade_log['trades']:
@@ -96,10 +96,17 @@ while True:
         {"trades":open_order_ledger_two},
         open_order_ledger_one
     ]
+
+    save_file = open("savedata.json", "w")  
+    json.dump(trades, save_file, indent = 6)  
+    save_file.close()  
     print(trades)
 
     current_hour = time.localtime().tm_hour
     # Sleep until the next hour starts
     time_to_sleep = (60 - time.localtime().tm_min) * 60 - time.localtime().tm_sec
     time.sleep(time_to_sleep)
+
+
+
 
