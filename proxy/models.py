@@ -14,6 +14,7 @@ class ProxyLog(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer)
     trade_id = Column(Integer)
+    order_id = Column(Integer)
     request = Column(JSON)
     response = Column(JSON)
 
