@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException, HTTPException
 from typing import Optional, Dict, Any
 from pydantic import BaseModel
 import common
+import proxy_log
 
 # Create a FastAPI app
 app = FastAPI()
@@ -27,15 +28,29 @@ async def call_api_route(payloads: CallApi):
     
     # Call the common.call_api() function to call the API
     response = await common.call_api(payload['url'], payload['method'], headers=payload['headers'], data=payload['data'])
-    
-    # # Check if the proxy has expired
+    proxy_data = {
+        'request':payload,
+        'response':response
+    }
+    proxy_log(**proxy_data)
+    # Check if the proxy has expired
     if 'Proxy expired' in response:
+        proxy_data = {
+        'request':payload,
+        'response':response
+        }
+        proxy_log(**proxy_data)
         # Raise a 422 Unprocessable Entity exception
         raise HTTPException(status_code=422, detail='Proxy expired')
 
     # Check if there was an error calling the API
     if response is None:
         # Raise a 500 Internal Server Error exception
+        proxy_data = {
+        'request':payload,
+        'response':response
+        }
+        proxy_log(**proxy_data)
         raise HTTPException(status_code=500, detail="Error calling API")
     return response
 

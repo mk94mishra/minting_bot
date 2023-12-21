@@ -1,5 +1,8 @@
 import requests
 import time
+from trades.trade_log import *
+from users.user_trade import *
+
 
 # Define your API credentials
 username = "signal"
@@ -36,58 +39,80 @@ def make_open_order_ledger(open_order):
                     "quote_currency": ot['quote_currency'],
                     "exchange": ot['exchange'],
                     "is_open": ot['is_open'],
+                    "amount":ot['amount'],
                     "stake_amount": ot['stake_amount'],
                     "open_rate": ot['open_rate'],
                     "stop_loss_abs": ot['stop_loss_abs'],
                     "exit_reason": ot['exit_reason'],
                     "realized_profit": ot['realized_profit'],
+                    "amount_precision":ot['amount_precision'],
+                    "price_precision":ot['price_precision'],
+                    "precision_mode":ot['precision_mode'],
+                    "contract_size":None
                 }
+        
+
             open_order_ledger_one['open_orders'].append(ot['trade_id'])
             open_order_ledger_two.append(ledger)
+            create_trade_log(ledger)
         page_number[1] = min(open_order_ledger_one['open_orders']) - 1 # offset
         open_order_ledger_one['total_trades']=ot['trade_id']
 
 import json
 while True:
     trade_log = fetch_trade_log(page_number[0],page_number[1])
+    # close open trades
     for tl in trade_log['trades']:
         if tl['trade_id'] not in open_order_ledger_one['open_orders']:
-            if tl['is_open'] == False:
+            if tl['is_open'] == False:  
                 ledger = {
                         "trade_id": tl['trade_id'],
                         "base_currency": tl['base_currency'],
                         "quote_currency": tl['quote_currency'],
                         "exchange": tl['exchange'],
                         "is_open": tl['is_open'],
+                        "amount": tl['amount'],
                         "stake_amount": tl['stake_amount'],
                         "open_rate": tl['open_rate'],
                         "stop_loss_abs": tl['stop_loss_abs'],
                         "exit_reason": tl['exit_reason'],
                         "realized_profit": tl['realized_profit'],
+                        "amount_precision":tl['amount_precision'],
+                        "price_precision":tl['price_precision'],
+                        "precision_mode":tl['precision_mode'],
+                        "contract_size":tl['contract_size']
                     }
                 open_order_ledger_two.append(ledger)
+                # add to db
+                create_trade_log(ledger)
                 open_order_ledger_one['stake_capital'] = open_order_ledger_one['stake_capital']+tl['realized_profit']
                 open_order_ledger_one['closed_orders'].append(tl['trade_id'])
             open_order_ledger_one['total_trades']=tl['trade_id']
 
     open_order = fetch_open_order_list()
     status_open_order_list = []
+    # make a list for open orders
     for ot in open_order:
         if ot['is_open'] == True:
             status_open_order_list.append(ot['trade_id'])
 
     open_order_ledger_one['open_orders'].sort()
     status_open_order_list.sort()
+    # close open orders list
     if open_order_ledger_one['open_orders'] != status_open_order_list:
         make_open_order_ledger(open_order)
-        
         for tl in trade_log['trades']:
             if tl['trade_id'] in open_order_ledger_one['open_orders']:
                 for opi in open_order_ledger_two:
                     if opi['trade_id'] == tl['trade_id']:
                         opi['realized_profit'] = tl['realized_profit']
                         open_order_ledger_one['stake_capital'] = open_order_ledger_one['stake_capital']+tl['realized_profit']
-                        open_order_ledger_one['exit_reason'] = tl['exit_reason']
+                        opi['exit_reason'] = tl['exit_reason']
+                        opi['is_open'] = tl['is_open']
+                        opi['contract_size'] = tl['contract_size']
+
+                        create_trades_data = {'realized_profit':tl['realized_profit'], 'trade_id':tl['trade_id'],'exit_reason':tl['exit_reason'],'is_open':tl['is_open']}
+                        create_trade_log(create_trades_data)
                         
                 open_order_ledger_one['open_orders'].remove(tl['trade_id'])
                 page_number[1] = min(open_order_ledger_one['open_orders']) - 1 
@@ -96,12 +121,9 @@ while True:
         {"trades":open_order_ledger_two},
         open_order_ledger_one
     ]
-
-    save_file = open("savedata.json", "w")  
-    json.dump(trades, save_file, indent = 6)  
-    save_file.close()  
-    print(trades)
-
+ 
+    create_all_trade_log(open_order_ledger_one)
+    users_trade_settings()
     current_hour = time.localtime().tm_hour
     # Sleep until the next hour starts
     time_to_sleep = (60 - time.localtime().tm_min) * 60 - time.localtime().tm_sec

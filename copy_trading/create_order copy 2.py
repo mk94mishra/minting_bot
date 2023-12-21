@@ -44,7 +44,7 @@ def arrange_order(api_key,api_secret,params):
             "method":"POST",
             "data":None
             }
-    print(request_data)
+    # print(request_data)
     return request_data
     
 # total_users = 2
