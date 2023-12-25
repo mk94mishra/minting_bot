@@ -86,7 +86,7 @@ while True:
                 # add to db
                 create_trade_log(ledger)
                 open_order_ledger_one['stake_capital'] = open_order_ledger_one['stake_capital']+tl['realized_profit']
-                open_order_ledger_one['closed_orders'].append(tl['trade_id'])
+                # open_order_ledger_one['closed_orders'].append(tl['trade_id'])
             open_order_ledger_one['total_trades']=tl['trade_id']
 
     open_order = fetch_open_order_list()
@@ -124,10 +124,8 @@ while True:
  
     create_all_trade_log(open_order_ledger_one)
     users_trade_settings()
-    current_hour = time.localtime().tm_hour
     # Sleep until the next hour starts
-    time_to_sleep = (60 - time.localtime().tm_min) * 60 - time.localtime().tm_sec
-    time.sleep(time_to_sleep)
+    time.sleep(10)
 
 
 

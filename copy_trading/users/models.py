@@ -1,13 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, JSON,ARRAY, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Boolean, JSON, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import declarative_base
-
-import sys
-# Add a directory to sys.path
-new_directory = '../'
-sys.path.append(new_directory)
-
 from db import *
 
 
@@ -40,6 +32,7 @@ class UserTrade(Base):
     __tablename__ = 'user_trades'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
+    api_key = Column(String)
     trade_id = Column(Integer)
     base_currency = Column(String)
     quote_currency = Column(String)
@@ -65,6 +58,9 @@ class UserTrade(Base):
     flag_one_close = Column(Integer)
     flag_two_close = Column(Integer)
 
+    __table_args__ = (
+        UniqueConstraint('user_id', 'trade_id', name='uq_user_trade'),
+    )
 
 class UserAllTrade(Base):
     __tablename__ = 'user_all_trades'

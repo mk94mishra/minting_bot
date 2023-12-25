@@ -1,0 +1,25 @@
+insert
+	into
+	public.users
+("name",
+	email,
+	mobile,
+	"password",
+	is_active)
+values('mm',
+'mm@mm.com',
+'',
+'',
+true);
+
+insert
+	into
+	public.broker
+(user_id,
+	api_key,
+	api_secret,
+	is_active)
+values(1,
+'Nw3cglPnQmqtJVCyjOp84CYfB9T0lcwT9Jm93hPbyAhEgR23mNz8gnkZuPXtfJwJ',
+'bsl0oeBw2sxni3PnOt9PpEnPmKQ9gB3IQVPYlzITTCzeJXGrW2vWAhByQjWFtcbu',
+true);

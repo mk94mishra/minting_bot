@@ -11,11 +11,11 @@ api_secret = 'bsl0oeBw2sxni3PnOt9PpEnPmKQ9gB3IQVPYlzITTCzeJXGrW2vWAhByQjWFtcbu'
 
 # Replace with your actual proxy URL
 proxy_url = 'http://127.0.0.1:8001/router'
-
+# :23868340928
 
 # Define order parameters
 symbol = 'BTCUSDT'
-side = 'SELL'
+side = 'BUY'
 type_ = 'MARKET'
 quantity = 0.0005
 import uuid
@@ -25,7 +25,7 @@ params = {
     'side': side,
     'type': type_,
     'quantity': quantity,
-    'newClientOrderId':str(uuid.uuid1()),
+    'newClientOrderId': f"ttututuj77-B-1-123",
     'timestamp': int(time.time() * 1000),
 }
 

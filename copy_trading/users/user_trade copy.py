@@ -1,6 +1,6 @@
 from users.models import *
 from trades.models import *
-from db import *
+from copy_trading.db import *
 from create_order import *
 import time
 # # Create a session

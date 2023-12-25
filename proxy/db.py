@@ -1,10 +1,30 @@
 from sqlalchemy import create_engine
-import sys
-# Add a directory to sys.path
-new_directory = './'
-sys.path.append(new_directory)
+from sqlalchemy.orm import declarative_base
 
-database_url = 'sqlite:///db_trade.db'
+
+import sqlalchemy as sa
+
+# Replace with your PostgreSQL credentials and database details
+username = "postgres"
+password = "123456"
+host = "localhost"
+port = 5432  # Default PostgreSQL port
+database = "db_mintingbot"
+
+# Construct the connection string
+database_url = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{database}"
+
 engine = create_engine(database_url)
+
+Base = declarative_base()
+
+
+from models import *
+
+Base.metadata.create_all(engine)
+
+
+
+
 
 
