@@ -125,7 +125,7 @@ while True:
     create_all_trade_log(open_order_ledger_one)
     users_trade_settings()
     # Sleep until the next hour starts
-    time.sleep(10)
+    time.sleep(120)
 
 
 
