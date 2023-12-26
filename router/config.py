@@ -1,9 +1,9 @@
 proxy = [
     "proxy_one",
-    "proxy_two",
-    "proxy_three",
-    "proxy_four",
-    "proxy_five"
+    # "proxy_two",
+    # "proxy_three",
+    # "proxy_four",
+    # "proxy_five"
     ]
 
 custom = {
@@ -16,10 +16,10 @@ proxy_call_limit = 20000
 
 proxy_url ={
     'proxy_one':'http://127.0.0.1:8000',
-    'proxy_two':'http://127.0.0.1:8001',
-    'proxy_three':'http://127.0.0.1:8002',
-    'proxy_four':'http://127.0.0.1:8003',
-    'proxy_five':'http://127.0.0.1:8004'
+    # 'proxy_two':'http://127.0.0.1:8001',
+    # 'proxy_three':'http://127.0.0.1:8002',
+    # 'proxy_four':'http://127.0.0.1:8003',
+    # 'proxy_five':'http://127.0.0.1:8004'
 }
 
 # public ip's proxy

@@ -8,7 +8,7 @@ custom = {
 #     "bin_max_weightage":2
 # }
 
-proxy_name = 'proxy_two'
+proxy_name = 'proxy_one'
 
 # bin_api_list = [
 #     'https://api1.binance.com',
@@ -25,3 +25,10 @@ bin_api_list = [
     'https://testnet.binance.vision',
     'https://testnet.binance.vision'
 ]
+
+
+username = "signal"
+password = "pa$$word"
+host = "mint-test.ccoqcf5illtt.ap-south-2.rds.amazonaws.com"
+port = 5432  # Default PostgreSQL port
+database = "postgres"
