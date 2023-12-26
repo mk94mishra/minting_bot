@@ -21,7 +21,10 @@ proxy_url ={
     # 'proxy_four':'http://127.0.0.1:8003',
     # 'proxy_five':'http://127.0.0.1:8004'
 }
-
+proxy_url ={
+    'proxy_one':'http://18.60.63.124:8000',
+}
+# 
 # public ip's proxy
 # proxy_url ={
 #     'proxy_one':'http://18.61.177.139:8000',
@@ -32,9 +35,9 @@ proxy_url ={
 # }
 
 # # private ip's proxy
-proxy_url ={
-    'proxy_one':'http://172.31.29.170:8000'
-}
+# proxy_url ={
+#     'proxy_one':'http://172.31.29.170:8000'
+# }
 # proxy_url ={
 #     'proxy_one':'http://172.31.29.57:8000',
 #     'proxy_two':'http://172.31.29.170:8000',

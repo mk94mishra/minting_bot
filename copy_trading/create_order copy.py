@@ -10,12 +10,12 @@ api_key = 'Nw3cglPnQmqtJVCyjOp84CYfB9T0lcwT9Jm93hPbyAhEgR23mNz8gnkZuPXtfJwJ'
 api_secret = 'bsl0oeBw2sxni3PnOt9PpEnPmKQ9gB3IQVPYlzITTCzeJXGrW2vWAhByQjWFtcbu'
 
 # Replace with your actual proxy URL
-proxy_url = 'http://127.0.0.1:8001/router'
+proxy_url = 'http://127.0.0.1:8005/router'
 # :23868340928
 
 # Define order parameters
 symbol = 'BTCUSDT'
-side = 'BUY'
+side = 'SELL'
 type_ = 'MARKET'
 quantity = 0.0005
 import uuid
