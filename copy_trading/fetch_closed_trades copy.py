@@ -13,16 +13,13 @@ proxy_url = 'http://127.0.0.1:8001/router'
 
 # Binance API endpoint for getting closed trades
 api_url = 'https://api.binance.com/api/v3/allOrders'
-
-api_url = 'https://api.binance.com/api/v3/orders'
 recv_window = 60000
 
 # Construct the query parameters
 params = {
     'symbol': 'BTCUSDT',  # Replace with the trading pair you are interested in
-    'timestamp': (int(time.time() * 1000)),
+    'timestamp': int(time.time() * 1000),
     'recvWindow': recv_window,
-    "clientOrderId": "x-R4BD3S82ae27c394b597cd85d712c1",
 }
 
 # Create the query string

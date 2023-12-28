@@ -24,10 +24,10 @@ def arrange_data(start_time,total_call,method,data):
         results = asyncio.run(call_all_proxy_concurrent(limit_call,data=data))
         all_results.append(results)
         
-    with open('testresults.txt', 'a') as file:
-        file.write(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call\n")
-        file.write(f'{all_results}')
-        file.close()
+    # with open('testresults.txt', 'a') as file:
+    #     file.write(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call\n")
+    #     file.write(f'{all_results}')
+    #     file.close()
 
     print(f"concurrent call start time{start_time} and end time{datetime.now()} in {total_call} call")
     gc.collect()

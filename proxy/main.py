@@ -28,13 +28,16 @@ async def call_api_route(payloads: CallApi):
     
     # Call the common.call_api() function to call the API
     response = await common.call_api(payload['url'], payload['method'], headers=payload['headers'], data=payload['data'])
-
-    try:
-        proxy_data = {
+    proxy_data = {
             'request':{'data':payload},
             'response': {'data':response['data']}
         }
+    try:
         proxy_log(proxy_data)
+    except Exception as e:
+        print(e)
+    try:
+        proxy_log_sl(proxy_data)
     except Exception as e:
         print(e)
     # Check if the proxy has expired

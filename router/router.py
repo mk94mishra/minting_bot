@@ -30,9 +30,9 @@ async def make_api_call_concurrent(session, data, proxy_no):
     async with session.post(url, json=data[i]) as response:
         json_response = await response.json()
         i=i+1
-        with open('output.txt', 'a') as file:
-            file.write(f'| {i}--{response.status}--{time.time()}\n')
-            file.close()
+        # with open('output.txt', 'a') as file:
+        #     file.write(f'| {i}--{response.status}--{time.time()}\n')
+        #     file.close()
         return json_response
 
 

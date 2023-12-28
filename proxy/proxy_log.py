@@ -1,5 +1,6 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 import json
 from urllib.parse import urlparse, parse_qs
 from models import *
@@ -38,5 +39,30 @@ def proxy_log(trade_data):
         session.add(ProxyLog(**trade_data))
         # Commit th changes to the database
         session.commit()
+        if trade_type == 'S' and order_id:
+            update_query = text("UPDATE user_trades SET is_open=false WHERE user_id=:user_id and trade_id=:trade_id")
+            params = {'user_id': user_id, 'trade_id':trade_id}
+            session.execute(update_query, params)
+            session.commit()
+        session.close()
 
 
+    
+def proxy_log_sl(trade_data):
+    url = trade_data['request']['data']['url']
+    response = trade_data['response']['data']
+    # Parse the URL
+    parsed_url = urlparse(url)
+    # Get the query parameters
+    query_params = parse_qs(parsed_url.query)
+    # Fetch the value of newClientOrderId
+    order_id = query_params.get('order_id', [None])[0]
+    with Session(engine) as session:
+        result = session.execute(text("SELECT * FROM proxy_log WHERE order_id = :order_id "), {"order_id": order_id})
+        trade_data = result.fetchall()
+
+        update_query = text("UPDATE user_trades SET is_open=false WHERE user_id=:user_id and trade_id=:trade_id")
+        params = {'user_id': trade_data[0].user_id, 'trade_id':trade_data[0].trade_id}
+        session.execute(update_query, params)
+        session.commit()
+        session.close()
