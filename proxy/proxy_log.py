@@ -51,18 +51,19 @@ def proxy_log(trade_data):
 def proxy_log_sl(trade_data):
     url = trade_data['request']['data']['url']
     response = trade_data['response']['data']
-    # Parse the URL
-    parsed_url = urlparse(url)
-    # Get the query parameters
-    query_params = parse_qs(parsed_url.query)
-    # Fetch the value of newClientOrderId
-    order_id = query_params.get('order_id', [None])[0]
-    with Session(engine) as session:
-        result = session.execute(text("SELECT * FROM proxy_log WHERE order_id = :order_id "), {"order_id": order_id})
-        trade_data = result.fetchall()
+    if 'code' not in response.keys():
+        # Parse the URL
+        parsed_url = urlparse(url)
+        # Get the query parameters
+        query_params = parse_qs(parsed_url.query)
+        # Fetch the value of newClientOrderId
+        order_id = query_params.get('order_id', [None])[0]
+        with Session(engine) as session:
+            result = session.execute(text("SELECT * FROM proxy_log WHERE order_id = :order_id "), {"order_id": order_id})
+            trade_data = result.fetchall()
 
-        update_query = text("UPDATE user_trades SET is_open=false WHERE user_id=:user_id and trade_id=:trade_id")
-        params = {'user_id': trade_data[0].user_id, 'trade_id':trade_data[0].trade_id}
-        session.execute(update_query, params)
-        session.commit()
-        session.close()
+            update_query = text("UPDATE user_trades SET is_open=false WHERE user_id=:user_id and trade_id=:trade_id")
+            params = {'user_id': trade_data[0].user_id, 'trade_id':trade_data[0].trade_id}
+            session.execute(update_query, params)
+            session.commit()
+            session.close()
