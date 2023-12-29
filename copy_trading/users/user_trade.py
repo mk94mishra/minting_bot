@@ -27,7 +27,7 @@ def users_trade_settings():
                 trade_ids_close_stop_loss.append(result.trade_id)
             if result.exit_reason == 'exit_signal':
                 trade_ids_close_exit_signal.append(result.trade_id)
-
+        print("mmsssccc-",trade_ids_close_stop_loss)
         if trade_ids_to_close != []:
             open_trade_ids_user_trades = session.query(UserTrade,Broker).join(UserTrade, Broker.user_id == UserTrade.user_id).filter(UserTrade.trade_id.in_(trade_ids_to_close), UserTrade.is_open == True, Broker.is_active == True).all()
             
@@ -56,20 +56,20 @@ def users_trade_settings():
                             'newClientOrderId': client_order_id,
                             'timestamp': int(time.time() * 1000),
                             'recvWindow': 60000,
-                        }                            
+                        }        
+                        final_order_list.append([bt.api_key, bt.api_secret, params])                    
                         print(params)
-                        if ot.trade_id in trade_ids_close_stop_loss:
-                            result = session.execute(text("SELECT client_order_id, order_id FROM proxy_log WHERE trade_id = :trade_id and user_id = :user_id and order_id is not null and trade_type = 'SL'"), {"trade_id": ot.trade_id,'user_id':ot.user_id})
-                            exist_trade = result.fetchall()
-                            if exist_trade:
-                                sl_params = {
-                                    'symbol': f'{ot.base_currency}{ot.quote_currency}',
-                                    'orderId': exist_trade[0].order_id,
-                                    'timestamp': int(time.time() * 1000),
-                                    'recvWindow': 60000,
-                                }
-                                final_sl_closed_order_list.append([bt.api_key, bt.api_secret, sl_params])
-                        final_order_list.append([bt.api_key, bt.api_secret, params])
+                    if ot.trade_id in trade_ids_close_stop_loss:
+                        result = session.execute(text("SELECT client_order_id, order_id FROM proxy_log WHERE trade_id = :trade_id and user_id = :user_id and order_id is not null and trade_type = 'SL'"), {"trade_id": ot.trade_id,'user_id':ot.user_id})
+                        exist_trade = result.fetchall()
+                        if exist_trade:
+                            sl_params = {
+                                'symbol': f'{ot.base_currency}{ot.quote_currency}',
+                                'orderId': exist_trade[0].order_id,
+                                'timestamp': int(time.time() * 1000),
+                                'recvWindow': 60000,
+                            }
+                            final_sl_closed_order_list.append([bt.api_key, bt.api_secret, sl_params])
             trade_ids_close_stop_loss = []
             trade_ids_close_exit_signal = []
             # close open trades
