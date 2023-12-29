@@ -123,7 +123,7 @@ def users_trade_settings():
             # session.commit()
 
     with Session(engine) as session:
-        open_trade_ids_user_trades = session.query(UserTrade,Broker).join(UserTrade, Broker.user_id == UserTrade.user_id).filter(UserTrade.is_open == True, Broker.is_active == True).all()
+        open_trade_ids_user_trades = session.query(UserTrade,Broker).join(UserTrade, Broker.user_id == UserTrade.user_id).join(UserTrade, Trade.trade_id == UserTrade.trade_id).filter(Trade.is_open == True, Broker.is_active == True).all()
         
         final_order_list = []
         for ot, bt in open_trade_ids_user_trades:
