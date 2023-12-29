@@ -39,6 +39,11 @@ def arrange_data(start_time,total_call,method,data):
 async def call_api_route(request:Request,payloads: CallApi):
     payloads = payloads.dict()
     total_call = len(payloads['data'])
+    print("manish-length-",total_call)
+    print("mmdata-",payloads['data'])
+    print("call p start")
     response = await call_all_proxy_concurrent(total_call,data=payloads['data'])
+    
+    print("call p end")
     print(response)
     return response

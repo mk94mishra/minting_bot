@@ -39,6 +39,11 @@ def users_trade_settings():
                 result = session.execute(text("SELECT client_order_id, order_id FROM proxy_log WHERE client_order_id = :client_order_id and order_id is not null"), {"client_order_id": client_order_id})
                 exist_trade = result.fetchall()
                 print("prrrr-",result.fetchall())
+                try:
+                    cancelOrderId = result[0].order_id
+                except:
+                    cancelOrderId = 0
+
                 if exist_trade == []:
                     if ot.trade_id in trade_ids_close_exit_signal:
                         params = {
@@ -47,7 +52,7 @@ def users_trade_settings():
                             'type': 'MARKET',
                             'quantity': ot.amount,
                             'cancelReplaceMode':'STOP_ON_FAILURE',
-                            'cancelOrderId': result[0].order_id,
+                            'cancelOrderId':cancelOrderId,
                             'newClientOrderId': client_order_id,
                             'timestamp': int(time.time() * 1000),
                             'recvWindow': 60000,
@@ -59,12 +64,12 @@ def users_trade_settings():
                             if exist_trade:
                                 sl_params = {
                                     'symbol': f'{ot.base_currency}{ot.quote_currency}',
-                                    'orderId': result[0].order_id,
+                                    'orderId': exist_trade[0].order_id,
                                     'timestamp': int(time.time() * 1000),
                                     'recvWindow': 60000,
                                 }
                                 final_sl_closed_order_list.append([bt.api_key, bt.api_secret, sl_params])
-                    final_order_list.append([bt.api_key, bt.api_secret, params])
+                        final_order_list.append([bt.api_key, bt.api_secret, params])
             trade_ids_close_stop_loss = []
             trade_ids_close_exit_signal = []
             # close open trades
@@ -126,7 +131,7 @@ def users_trade_settings():
             client_order_id = f"{config.broker_id}-B-{ot.user_id}-{ot.trade_id}"
             result = session.execute(text("SELECT client_order_id FROM proxy_log WHERE client_order_id = :client_order_id and order_id is not null"), {"client_order_id": client_order_id})
             exist_trade = result.fetchall()
-            print("prt-",result.fetchall())
+            print("prt-",exist_trade)
             if exist_trade == []:
                 params = {
                     'symbol': f'{ot.base_currency}{ot.quote_currency}',
@@ -146,7 +151,7 @@ def users_trade_settings():
             client_order_id = f"{config.broker_id}-SL-{ot.user_id}-{ot.trade_id}"
             result = session.execute(text("SELECT client_order_id FROM proxy_log WHERE client_order_id = :client_order_id and order_id is not null"), {"client_order_id": client_order_id})
             exist_trade = result.fetchall()
-            print("prtsl-",result.fetchall())
+            print("prtsl-",exist_trade)
             if exist_trade == []:
                 params = {
                     'symbol': f'{ot.base_currency}{ot.quote_currency}',

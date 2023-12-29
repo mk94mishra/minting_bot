@@ -9,9 +9,9 @@ def select_proxy(proxy_no):
     active_url = proxy_url_list[proxy_no]
     return active_url
 
-i=0
-import time
 
+import time
+data_i = 0
 # Function to make an API call using the specified proxy
 async def make_api_call_concurrent(session, data, proxy_no):
     """Makes an API call using the specified proxy.
@@ -26,10 +26,8 @@ async def make_api_call_concurrent(session, data, proxy_no):
 
     url = select_proxy(proxy_no)
     url = f"{url}/call_api"
-    global i 
-    async with session.post(url, json=data[i]) as response:
+    async with session.post(url, json=data) as response:
         json_response = await response.json()
-        i=i+1
         # with open('output.txt', 'a') as file:
         #     file.write(f'| {i}--{response.status}--{time.time()}\n')
         #     file.close()
@@ -55,9 +53,9 @@ def make_api_call(data,proxy_no):
     url = f"{url}/call_api"
         
     response = requests.post(url, json=data)
-    with open('output.txt', 'a') as file:
-        file.write(f'| {i}--{response.status_code}--{time.time()}\n')
-        file.close()
+    # with open('output.txt', 'a') as file:
+    #     file.write(f'| {i}--{response.status_code}--{time.time()}\n')
+    #     file.close()
     json_response = response.json()
     return json_response
 
@@ -69,10 +67,9 @@ async def concurrent_call(start_range,end_range,data,proxy_no):
     Returns:
         A list of JSON responses from the API, or None if all requests failed.
     """
+    print("concurrent_call-mm",start_range,end_range,data,proxy_no)
     async with ClientSession() as session:
-        tasks = [make_api_call_concurrent(session, data, proxy_no) for n in range(start_range,end_range)]
-        global i
-        i=0
+        tasks = [make_api_call_concurrent(session, data[n], proxy_no) for n in range(start_range,end_range)]
         return await asyncio.gather(*tasks)
     
     
