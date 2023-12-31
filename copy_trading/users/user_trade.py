@@ -6,6 +6,8 @@ from trades.models import *
 import create_order as ct
 import time
 import config as config
+from sqlalchemy.orm import aliased
+
 
 
 def users_trade_settings():
@@ -123,7 +125,25 @@ def users_trade_settings():
             # session.commit()
 
     with Session(engine) as session:
-        open_trade_ids_user_trades = session.query(UserTrade,Broker).join(UserTrade, Broker.user_id == UserTrade.user_id).join(UserTrade, Trade.trade_id == UserTrade.trade_id).filter(Trade.is_open == True, Broker.is_active == True).all()
+        open_trade_ids_user_trades = session.query(UserTrade,Broker).join(UserTrade, Broker.user_id == UserTrade.user_id).join(Trade, Trade.trade_id == UserTrade.trade_id).filter(Trade.is_open == True, Broker.is_active == True).all()
+
+        # user_trade_alias = aliased(UserTrade)
+        # trade_alias = aliased(Trade)
+
+        # # Your query
+        # result = (
+        #     session.query(UserTrade, Broker)
+        #     .join(Broker, Broker.user_id == UserTrade.user_id)
+        #     .join(Trade, Trade.trade_id == UserTrade.trade_id)
+        #     .filter(Trade.is_open == True, Broker.is_active == True)
+        #     .all()
+        # )
+
+        # SELECT user_trade.*, broker.*
+        # FROM user_trade
+        # JOIN broker ON broker.user_id = user_trade.user_id
+        # JOIN trade AS trade_alias ON trade_alias.trade_id = user_trade.trade_id
+        # WHERE trade_alias.is_open = TRUE AND broker.is_active = TRUE;
         
         final_order_list = []
         for ot, bt in open_trade_ids_user_trades:
